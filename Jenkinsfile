@@ -1,23 +1,10 @@
 pipeline {
     agent any
     environment {
-        //be sure to replace "willbla" with your own Docker Hub username
+        //Simplified pipeline to test deploying docker image to Kubernetes cluster using Jenkins
         DOCKER_IMAGE_NAME = "adilkhanekt/train-schedule-kube-monit"
     }
     stages {
-        stage('Build Docker Image') {
-            when {
-                branch 'master'
-            }
-            steps {
-                script {
-                    app = docker.build(DOCKER_IMAGE_NAME)
-                    app.inside {
-                        sh 'echo Hello, World!'
-                    }
-                }
-            }
-        }
         stage('DeployToProduction') {
             when {
                 branch 'master'

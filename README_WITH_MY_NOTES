@@ -1,0 +1,27 @@
+Kubernetes cluster config - my_kube_config.yaml
+
+Jenkins deployment to Kubernetes test case:
+	- need to use adilkhanekt/train_schedule_node_js image to run the app in Kubernetes
+	- Jenkins pipeline was super simplified to just deploy image to the cluster
+	- kube service and deployment config file - train-schedule-kube.yaml
+
+Monitoring test case (for simplicity deploy using "kubectl apply"):
+	- need to use adilkhanekt/train-schedule-kube-monit image to run the app in Kubernetes
+	- kube service and deployment config file - monitoring_train_schedule_instance.yaml
+	- to see the metrics that the app publishes need to follow url: http://<public url of the node>:<exposed port number>/metrics
+	- need to install prometheus and grafana helm charts with the help of grafana-values.yml, prometheus-values.yml config files
+	- need to expose ports for prometheus and grafana to be accessible from outside of cluster by deploying NodePort services using grafana_kube.yaml, prometheus_kube.yaml config files
+
+Self healing test case (for simplicity deploy using "kubectl apply"):
+	- need to use adilkhanekt/train-schedule-kube-selfhealing image to run the app in Kuberetes
+	- kube service and deployment config file - selfhealing_train_schedule_instance.yaml
+	- to test the app failure need to follow url: http://<public url of the node>:<exposed port number>/break
+
+Autoscaling test case (for simplicity deploy using "kubectl apply"):
+	- need to use adilkhanekt/train-schedule-kube-autoscaling image to run the app in Kubernetes
+	- kube service and deployment config file - autoscaling_train_schedule_instance.yaml
+	- need to spin up metrics server in the Kubernetes cluster using components_metrics_server.yaml config file
+	- to generate load need to spin up another pod in the cluster:
+		kubectl run -i --tty load-generator --image=busybox /bin/sh
+	- run the while loop on that load generator pod:
+		while true; do wget -q -O- http://<service ip>:8080/generate-cpu-load; done

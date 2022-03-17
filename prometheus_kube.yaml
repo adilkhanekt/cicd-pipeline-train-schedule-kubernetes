@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+        namespace: default
+        name: prometheus-server-ext
+spec:
+        type: NodePort
+        selector:
+                app: prometheus
+                component: server
+                release: prometheus
+        ports:
+                - protocol: TCP
+                  port: 9090
+                  nodePort: 30909

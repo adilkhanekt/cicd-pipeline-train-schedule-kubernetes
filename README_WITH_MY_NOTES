@@ -25,3 +25,6 @@ Autoscaling test case (for simplicity deploy using "kubectl apply"):
 		kubectl run -i --tty load-generator --image=busybox /bin/sh
 	- run the while loop on that load generator pod:
 		while true; do wget -q -O- http://<service ip>:8080/generate-cpu-load; done
+
+P.S.: In order to setup this cluster on EC2 instances need to keep in mind about necessary ports that have to open.
+List of ports is aggregated in security_group_settings.txt file

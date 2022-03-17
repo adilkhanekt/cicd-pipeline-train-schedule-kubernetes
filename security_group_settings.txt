@@ -1,0 +1,15 @@
+Flannel									     	UDP 8472  - VPC local subnet
+Kubernetes API server					     	TCP 6443  - VPC local subnet
+Kubelet API								     	TCP 10250 - VPC local subnet
+Kubernetes Metrics Server				     	TCP 4443  - VPC local subnet
+SSH										     	TCP 22	  - 0.0.0.0/0
+ICMP									     			  - 0.0.0.0/0
+Jenkins 								     	TCP 8080  - 0.0.0.0/0 exposed for access from public internet
+Node JS app basic						     	TCP 30303 - 0.0.0.0/0 exposed for access from outside of Kube cluster and public internet
+Node JS app to test monitoring			     	TCP 30101 - 0.0.0.0/0 exposed for access from outside of Kube cluster and public internet
+Node JS app to test selfhealing			     	TCP 30606 - 0.0.0.0/0 exposed for access from outside of Kube cluster and public internet
+Node JS app to test autoscaling			     	TCP 30808 - 0.0.0.0/0 exposed for access from outside of Kube cluster and public internet
+Node JS app stable pods for canary testing		TCP 30099 - 0.0.0.0/0 exposed for access from outside of Kube cluster and public internet
+Node JS app canary pods for canary testing		TCP 30100 - 0.0.0.0/0 exposed for access from outside of Kube cluster and public internet
+Prometheus										TCP 30909 - 0.0.0.0/0 exposed for access from outside of Kube cluster and public internet
+Grafana									     	TCP 30000 - 0.0.0.0/0 exposed for access from outside of Kube cluster and public internet

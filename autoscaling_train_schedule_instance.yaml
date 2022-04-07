@@ -15,6 +15,22 @@ spec:
 
 ---
 
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+        name: train-storage
+        labels:
+                app: train-autoscaling
+spec:
+        accessModes:
+        - ReadWriteOnce
+        storageClassName: sc-fast
+        resources:
+                requests:
+                        storage: 8Gi
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -22,7 +38,7 @@ metadata:
   labels:
     app: train-autoscaling
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: train-autoscaling
@@ -46,7 +62,13 @@ spec:
         resources:
           requests:
             cpu: 200m
-
+        volumeMounts:
+        - name: app-storage
+          mountPath: /tmp/ebsvolume/
+      volumes:
+      - name: app-storage
+        persistentVolumeClaim:
+          claimName: train-storage
 ---
 
 apiVersion: autoscaling/v2beta1
